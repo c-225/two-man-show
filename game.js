@@ -2,8 +2,8 @@ const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
 
 const player = {
-    x: 50,
-    y: 50,
+    x: 0,
+    y: 0,
     size: 30,
     speed: 5,
     dx: 0,
@@ -11,9 +11,37 @@ const player = {
 };
 
 const obstacles = [
-    { x: 200, y: 200, width: 50, height: 50 },
-    { x: 300, y: 100, width: 100, height: 50 },
+    { name: "ob1", x: 200, y: 200, width: 50, height: 50 },
+    { name: "ob2", x: 300, y: 100, width: 100, height: 50 },
 ];
+
+const keys = {
+    ArrowUp: false,
+    ArrowDown: false,
+    ArrowLeft: false,
+    ArrowRight: false,
+}
+
+function resetIfHitted() {
+    if (isCollidingWithObstacles(player)) {
+        player.x = 50;
+        player.y = 50;
+    }
+}
+
+function movePlayer(e) {
+    if (keys[e.key] !== undefined) {
+        keys[e.key] = true;
+        updateDirection();
+    }
+}
+
+function stopPlayer(e) {
+    if (keys[e.key] !== undefined){
+        keys[e.key] = false;
+        updateDirection();
+    }
+}
 
 function updatePlayerPosition() {
     const newX = player.x + player.dx;
@@ -21,17 +49,15 @@ function updatePlayerPosition() {
 
     const futurePlayer = { x: newX, y: newY, size: player.size };
 
-    if (newX < 0) {
-        player.x = 0;
-    } else if (newX + player.size > canvas.width) {
-        player.x = canvas.width - player.size;
-    } else if (newY < 0) {
-        player.y = 0;
-    } else if (newY + player.size > canvas.height) {
-        player.y = canvas.height - player.size;
-    } else if (!isCollidingWithObstacles(futurePlayer)) {
+    if (newX >= 0 && newX + player.size <= canvas.width &&
+        newY >= 0 && newY + player.size <= canvas.height &&
+        !isCollidingWithObstacles(futurePlayer)) {
         player.x = newX;
         player.y = newY;
+    } else {
+        //location.reload();
+        player.x = 0;
+        player.y = 0;
     }
 }
 
@@ -60,20 +86,21 @@ function draw() {
     });
 }
 
-function movePlayer(e) {
-    if (e.key === 'ArrowUp') player.dy = -player.speed;
-    if (e.key === 'ArrowDown') player.dy = player.speed;
-    if (e.key === 'ArrowLeft') player.dx = -player.speed;
-    if (e.key === 'ArrowRight') player.dx = player.speed;
-}
+function updateDirection(e) {
+    player.dx = 0;
+    player.dy = 0;
 
-function stopPlayer(e) {
-    if (
-        e.key === 'ArrowUp' || e.key === 'ArrowDown' ||
-        e.key === 'ArrowLeft' || e.key === 'ArrowRight'
-    ) {
-        player.dx = 0;
-        player.dy = 0;
+    if (keys.ArrowUp) {
+        player.dy = -player.speed;
+    }
+    if (keys.ArrowDown) {
+        player.dy = player.speed;
+    }
+    if (keys.ArrowLeft) {
+        player.dx = -player.speed;
+    }
+    if (keys.ArrowRight) {
+        player.dx = player.speed;
     }
 }
 
