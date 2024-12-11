@@ -50,14 +50,14 @@ function updatePlayerPosition() {
     const futurePlayer = { x: newX, y: newY, size: player.size };
 
     if (newX >= 0 && newX + player.size <= canvas.width &&
-        newY >= 0 && newY + player.size <= canvas.height &&
-        !isCollidingWithObstacles(futurePlayer)) {
-        player.x = newX;
-        player.y = newY;
-    } else {
-        //location.reload();
-        player.x = 0;
-        player.y = 0;
+        newY >= 0 && newY + player.size <= canvas.height) {
+            if (isCollidingWithObstacles(futurePlayer)) {
+                player.x = 0;
+                player.y = 0;
+            } else {
+                player.x = newX;
+                player.y = newY;
+            }
     }
 }
 
