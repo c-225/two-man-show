@@ -70,9 +70,17 @@ export class Player extends GameObject {
 
         if (newX >= 0 && newX + this.width <= canvas.width &&
             newY >= 0 && newY + this.height <= canvas.height) {
-            if (obstacles.some(obstacle => futurePlayer.isCollidingWith(obstacle))) {
-                this.x = 0;
-                this.y = 0;
+            const collidingObstacle = obstacles.find(obstacle => futurePlayer.isCollidingWith(obstacle));
+            if (collidingObstacle) {
+                if (collidingObstacle.moving) {
+                    this.x += collidingObstacle.dx;
+                    this.y += collidingObstacle.dy;
+                    if (this.x < 0 || this.x + this.width > canvas.width ||
+                        this.y < 0 || this.y + this.height > canvas.height) {
+                            this.x = 0;
+                            this.y = 0;
+                    }
+                }
             } else {
                 this.x = newX;
                 this.y = newY;
