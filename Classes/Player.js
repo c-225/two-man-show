@@ -5,60 +5,67 @@ const keys = {
     ArrowDown: false,
     ArrowLeft: false,
     ArrowRight: false,
+    z: false,
+    s: false,
+    q: false,
+    d: false,
 }
 
 export class Player extends GameObject {
 
-    constructor (x, y, size, speed, color) {
+    constructor (x, y, size, speed, color, keys) {
         super(x, y, size, size);
         this.speed = speed;
         this.dx = 0;
         this.dy = 0;
+        this.keys = keys;
         this.color = color;
     }
 
     movePlayer(canvas, obstacles) {
         document.addEventListener('keydown', (e) => {
-            if (keys[e.key] !== undefined) {
-                keys[e.key] = true;
+            if (this.keys[e.key] !== undefined) {
+                this.keys[e.key] = true;
                 this.updateDirection(keys);
                 this.updatePosition(canvas, obstacles);
             }
         });
 
         document.addEventListener('keyup', (e) => {
-            if (keys[e.key] !== undefined) {
-                keys[e.key] = false;
+            if (this.keys[e.key] !== undefined) {
+                this.keys[e.key] = false;
                 this.updateDirection(keys);
                 this.updatePosition(canvas, obstacles);
             }
         });
     }
 
-    stopPlayer(canvas, obstacles) {
-        document.addEventListener('keyup', (e) => {
-            if (keys[e.key] !== undefined) {
-                keys[e.key] = false;
-                this.updateDirection(keys);
-                this.updatePosition(canvas, obstacles);
-            }
-        });
-    }
-
-    updateDirection(keys) {
+    updateDirection() {
         this.dx = 0;
         this.dy = 0;
 
-        if (keys.ArrowUp) {
+        if (this.keys['z']) {
             this.dy = -this.speed;
         }
-        if (keys.ArrowDown) {
+        if (this.keys['s']) {
             this.dy = this.speed;
         }
-        if (keys.ArrowLeft) {
+        if (this.keys['q']) {
             this.dx = -this.speed;
         }
-        if (keys.ArrowRight) {
+        if (this.keys['d']) {
+            this.dx = this.speed;
+        }
+        if (this.keys['ArrowUp']) {
+            this.dy = -this.speed;
+        }
+        if (this.keys['ArrowDown']) {
+            this.dy = this.speed;
+        }
+        if (this.keys['ArrowLeft']) {
+            this.dx = -this.speed;
+        }
+        if (this.keys['ArrowRight']) {
             this.dx = this.speed;
         }
     }
