@@ -1,16 +1,5 @@
 import GameObject from './GameObject.js';
 
-const keys = {
-    ArrowUp: false,
-    ArrowDown: false,
-    ArrowLeft: false,
-    ArrowRight: false,
-    z: false,
-    s: false,
-    q: false,
-    d: false,
-}
-
 export class Player extends GameObject {
 
     constructor (x, y, size, speed, color, keys) {
@@ -26,7 +15,7 @@ export class Player extends GameObject {
         document.addEventListener('keydown', (e) => {
             if (this.keys[e.key] !== undefined) {
                 this.keys[e.key] = true;
-                this.updateDirection(keys);
+                this.updateDirection();
                 this.updatePosition(canvas, obstacles);
             }
         });
@@ -34,7 +23,7 @@ export class Player extends GameObject {
         document.addEventListener('keyup', (e) => {
             if (this.keys[e.key] !== undefined) {
                 this.keys[e.key] = false;
-                this.updateDirection(keys);
+                this.updateDirection();
                 this.updatePosition(canvas, obstacles);
             }
         });
@@ -44,30 +33,19 @@ export class Player extends GameObject {
         this.dx = 0;
         this.dy = 0;
 
-        if (this.keys['z']) {
+        if (this.keys['ArrowUp'] || this.keys['t'] || this.keys['z'] || this.keys['i']) {
             this.dy = -this.speed;
         }
-        if (this.keys['s']) {
+        if (this.keys['ArrowDown'] || this.keys['s'] || this.keys['g'] || this.keys['k']) {
             this.dy = this.speed;
         }
-        if (this.keys['q']) {
+        if (this.keys['ArrowLeft'] || this.keys['q'] || this.keys['f'] || this.keys['j']) {
             this.dx = -this.speed;
         }
-        if (this.keys['d']) {
+        if (this.keys['ArrowRight'] || this.keys['d'] || this.keys['h'] || this.keys['l']) {
             this.dx = this.speed;
         }
-        if (this.keys['ArrowUp']) {
-            this.dy = -this.speed;
-        }
-        if (this.keys['ArrowDown']) {
-            this.dy = this.speed;
-        }
-        if (this.keys['ArrowLeft']) {
-            this.dx = -this.speed;
-        }
-        if (this.keys['ArrowRight']) {
-            this.dx = this.speed;
-        }
+
     }
 
     updatePosition(canvas, obstacles) {

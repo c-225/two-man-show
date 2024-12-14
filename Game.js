@@ -6,7 +6,10 @@ const context = canvas.getContext('2d');
 
 const players = [
     new Player(50, 50, 30, 5, 'green', { 'z': false, 's': false, 'q': false, 'd': false }),
-    new Player(0, 0, 30, 5, 'blue', { 'ArrowUp': false, 'ArrowDown': false, 'ArrowLeft': false, 'ArrowRight': false }),]
+    new Player(0, 0, 30, 5, 'blue', { 'ArrowUp': false, 'ArrowDown': false, 'ArrowLeft': false, 'ArrowRight': false }),
+    new Player(100, 100, 30, 5, 'orange', { 'i': false, 'k': false, 'j': false, 'l': false }),
+    new Player(150, 150, 30, 5, 'purple', { 't': false, 'g': false, 'f': false, 'h': false }),
+];
 
 const obstacles = [
     new Obstacle(200, 200, 50, 50, 0, 0, false),
