@@ -1,64 +1,40 @@
 import GameObject from './GameObject.js';
 
-const keys = {
-    ArrowUp: false,
-    ArrowDown: false,
-    ArrowLeft: false,
-    ArrowRight: false,
-}
-
 export class Player extends GameObject {
 
-    constructor (x, y, size, speed, color) {
+    constructor (x, y, size, speed, color, controls) {
         super(x, y, size, size);
         this.speed = speed;
         this.dx = 0;
         this.dy = 0;
         this.color = color;
+        this.keys = controls;
+        this.score = 0;
     }
-
     movePlayer(canvas, obstacles) {
         document.addEventListener('keydown', (e) => {
-            if (keys[e.key] !== undefined) {
-                keys[e.key] = true;
-                this.updateDirection(keys);
+            if (this.keys[4][e.key] !== undefined) {
+                this.keys[4][e.key] = true;
+                this.updateDirection(this.keys);
                 this.updatePosition(canvas, obstacles);
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if (keys[e.key] !== undefined) {
-                keys[e.key] = false;
-                this.updateDirection(keys);
-                this.updatePosition(canvas, obstacles);
+                this.keys[4][e.key] = false;
             }
         });
     }
 
-    stopPlayer(canvas, obstacles) {
-        document.addEventListener('keyup', (e) => {
-            if (keys[e.key] !== undefined) {
-                keys[e.key] = false;
-                this.updateDirection(keys);
-                this.updatePosition(canvas, obstacles);
-            }
-        });
-    }
-
-    updateDirection(keys) {
+    updateDirection() {
         this.dx = 0;
         this.dy = 0;
-
-        if (keys.ArrowUp) {
+        if (this.keys[4][this.keys[0]]) { // touche du haut
             this.dy = -this.speed;
         }
-        if (keys.ArrowDown) {
+        if (this.keys[4][this.keys[1]]) { // touche du bas
             this.dy = this.speed;
         }
-        if (keys.ArrowLeft) {
+        if (this.keys[4][this.keys[2]]) { // touche de gauche
             this.dx = -this.speed;
         }
-        if (keys.ArrowRight) {
+        if (this.keys[4][this.keys[3]]) { // touche de droite
             this.dx = this.speed;
         }
     }
@@ -82,6 +58,7 @@ export class Player extends GameObject {
                     }
                 }
             } else {
+                console.log(this.dx, this.dy)
                 this.x = newX;
                 this.y = newY;
             }

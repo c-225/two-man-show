@@ -4,33 +4,21 @@ import Obstacle from './Classes/Obstacle.js';
 const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
 
+<<<<<<< Updated upstream
 const player1 = new Player(0, 0, 30, 5, 'green');
 
+=======
+const player1 = new Player(0, 0, 30, 5, 'blue', [ "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", {ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false}] );
+var players = []
+>>>>>>> Stashed changes
 const obstacles = [
     new Obstacle(200, 200, 50, 50, 0, 0, false),
     new Obstacle(300, 100, 100, 50, 0, 2, true),
 ];
 
-const keys = {
-    ArrowUp: false,
-    ArrowDown: false,
-    ArrowLeft: false,
-    ArrowRight: false,
-}
+var podium = []
 
-function movePlayer(e) {
-    if (keys[e.key] !== undefined) {
-        keys[e.key] = true;
-        player1.updateDirection(keys);
-    }
-}
-
-function stopPlayer(e) {
-    if (keys[e.key] !== undefined){
-        keys[e.key] = false;
-        player1.updateDirection(keys);
-    }
-}
+const keys = player1.keys
 
 function draw() {
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -44,14 +32,20 @@ function draw() {
     });
 }
 
+function win(player) {
+    // on va foutre le truc qui ajoute le joueur au podium quand il touche le truc d'arrivée
+}
+
 function gameLoop() {
+<<<<<<< Updated upstream
     obstacles.forEach(obstacle => obstacle.move(canvas));
     player1.updatePosition(canvas, obstacles);
+=======
+    
+    player1.movePlayer(canvas, obstacles);
+>>>>>>> Stashed changes
     draw();
     requestAnimationFrame(gameLoop);
 }
-
-document.addEventListener('keydown', movePlayer);
-document.addEventListener('keyup', stopPlayer);
 
 gameLoop();
