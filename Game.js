@@ -4,13 +4,8 @@ import Obstacle from './Classes/Obstacle.js';
 const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
 
-<<<<<<< Updated upstream
-const player1 = new Player(0, 0, 30, 5, 'green');
-
-=======
 const player1 = new Player(0, 0, 30, 5, 'blue', [ "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", {ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false}] );
 var players = []
->>>>>>> Stashed changes
 const obstacles = [
     new Obstacle(200, 200, 50, 50, 0, 0, false),
     new Obstacle(300, 100, 100, 50, 0, 2, true),
@@ -37,13 +32,8 @@ function win(player) {
 }
 
 function gameLoop() {
-<<<<<<< Updated upstream
-    obstacles.forEach(obstacle => obstacle.move(canvas));
-    player1.updatePosition(canvas, obstacles);
-=======
     
     player1.movePlayer(canvas, obstacles);
->>>>>>> Stashed changes
     draw();
     requestAnimationFrame(gameLoop);
 }
