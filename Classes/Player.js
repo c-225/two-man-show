@@ -15,16 +15,16 @@ export class Player extends GameObject {
 
     movePlayer(canvas, obstacles, players) {
         document.addEventListener('keydown', (e) => {
-            if (this.keys[e.key] !== undefined) {
-                this.keys[e.key] = true;
+            if (this.keys[4][e.code] !== undefined) {
+                this.keys[4][e.code] = true;
                 this.updateDirection();
                 this.updatePosition(canvas, obstacles, players);
             }
         });
 
         document.addEventListener('keyup', (e) => {
-            if (this.keys[e.key] !== undefined) {
-                this.keys[e.key] = false;
+            if (this.keys[4][e.code] !== undefined) {
+                this.keys[4][e.code] = false;
                 this.updateDirection();
                 this.updatePosition(canvas, obstacles, players);
             }
@@ -35,16 +35,16 @@ export class Player extends GameObject {
         this.dx = 0;
         this.dy = 0;
 
-        if (this.keys['ArrowUp'] || this.keys['t'] || this.keys['z'] || this.keys['i']) {
+        if (this.keys[4][[this.keys[0]]]) {
             this.dy = -this.speed;
         }
-        if (this.keys['ArrowDown'] || this.keys['s'] || this.keys['g'] || this.keys['k']) {
+        if (this.keys[4][[this.keys[1]]]) {
             this.dy = this.speed;
         }
-        if (this.keys['ArrowLeft'] || this.keys['q'] || this.keys['f'] || this.keys['j']) {
+        if (this.keys[4][[this.keys[2]]]) {
             this.dx = -this.speed;
         }
-        if (this.keys['ArrowRight'] || this.keys['d'] || this.keys['h'] || this.keys['l']) {
+        if (this.keys[4][[this.keys[3]]]) {
             this.dx = this.speed;
         }
 

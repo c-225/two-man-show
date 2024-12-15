@@ -1,6 +1,34 @@
 import Player from './Classes/Player.js';
 import Obstacle from './Classes/Obstacle.js';
-import GameObject from "./Classes/GameObject.js";
+
+let joueurs = []
+let controls = []
+let keys = ["KeyW", "KeyT", "KeyO", "ArrowUp"]
+let state = "init"
+
+document.addEventListener('keyup', (e) => {
+    if (state==="init") {
+        if (keys.includes(e.code)) {
+            let indice = keys.indexOf(e.code);
+            keys[indice]=null
+            joueurs.push("J"+(1+joueurs.length))
+
+            if (e.code === "KeyW"){ controls.push( [ "KeyW", "KeyS", "KeyA", "KeyD", { KeyW : false, KeyS : false, KeyA : false, KeyD : false}] ) }
+            if (e.code === "KeyT"){ controls.push( [ "KeyT", "KeyG", "KeyF", "KeyH", { KeyT : false, KeyG : false, KeyF : false, KeyH : false}] ) }
+            if (e.code === "KeyO"){ controls.push( [ "KeyO", "KeyL", "KeyK", "Semicolon", { KeyO : false, KeyL : false, KeyK : false, Semicolon : false}] ) }
+            if (e.code === "ArrowUp"){ controls.push( [ "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", { ArrowUp : false, ArrowDown : false, ArrowLeft : false, ArrowRight : false}] ) }
+            var paragraph = document.getElementById("listeP");
+            paragraph.innerHTML += joueurs[joueurs.length-1] +" est pret ! <br/>"
+            if (joueurs.length===4) {
+                var canvas = document.getElementById("gameCanvas")
+                canvas.style.display='block'
+                var init = document.getElementById("intro")
+            console.log(init)
+                init.style.display='none'
+            }
+        }
+    }
+})
 
 const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
