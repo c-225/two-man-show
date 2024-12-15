@@ -1,4 +1,5 @@
 import GameObject from './GameObject.js';
+import {nextLevel} from "../Game.js";
 
 export class Obstacle extends GameObject {
     constructor(x, y, width, height, dx , dy, moving = false) {
@@ -6,7 +7,9 @@ export class Obstacle extends GameObject {
         this.dx = dx;
         this.dy = dy;
         this.moving = moving;
+        this.win = false;
     }
+
 
     move(canvas) {
         if (this.moving) {

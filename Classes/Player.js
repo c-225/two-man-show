@@ -1,8 +1,10 @@
 import GameObject from './GameObject.js';
+import gameObject from "./GameObject.js";
+import {nextLevel} from "../Game.js";
 
 export class Player extends GameObject {
 
-    constructor (x, y, size, speed, color, keys) {
+    constructor(x, y, size, speed, color, keys) {
         super(x, y, size, size);
         this.speed = speed;
         this.dx = 0;
@@ -55,30 +57,42 @@ export class Player extends GameObject {
 
         if (newX >= 0 && newX + this.width <= canvas.width &&
             newY >= 0 && newY + this.height <= canvas.height) {
-            const collidingObstacle = obstacles.find(obstacle => futurePlayer.isCollidingWith(obstacle));
-            const collidingPlayer = players.find(player => player !== this && futurePlayer.isCollidingWith(player));
-            if (!collidingObstacle && !collidingPlayer) {
+            const collidingObstacles = obstacles.filter(obstacle => futurePlayer.isCollidingWith(obstacle));
+            const collidingPlayers = players.filter(player => player !== this && futurePlayer.isCollidingWith(player));
+
+            if (collidingObstacles.length === 0 && collidingPlayers.length === 0) {
                 this.x = newX;
                 this.y = newY;
-            } else if (collidingPlayer) {
-                const pushedX = collidingPlayer.x + this.dx;
-                const pushedY = collidingPlayer.y + this.dy;
-                if (pushedX >= 0 && pushedX + collidingPlayer.width <= canvas.width &&
-                    pushedY >= 0 && pushedY + collidingPlayer.height <= canvas.height) {
-                    collidingPlayer.x = pushedX;
-                    collidingPlayer.y = pushedY;
-                    this.x = newX;
-                    this.y = newY;
-                }
             } else {
-                if (collidingObstacle && collidingObstacle.moving) {
-                    this.x += collidingObstacle.dx;
-                    this.y += collidingObstacle.dy;
-                    if (this.x < 0 || this.x + this.width > canvas.width ||
-                        this.y < 0 || this.y + this.height > canvas.height) {
-                        this.x = 0;
-                        this.y = 0;
+                collidingPlayers.forEach(collidingPlayer => {
+                    const pushedX = collidingPlayer.x + this.dx;
+                    const pushedY = collidingPlayer.y + this.dy;
+                    const futurePushedPlayer = new GameObject(pushedX, pushedY, collidingPlayer.width, collidingPlayer.height);
+                    if (pushedX >= 0 && pushedX + collidingPlayer.width <= canvas.width &&
+                        pushedY >= 0 && pushedY + collidingPlayer.height <= canvas.height) {
+                        const pushedPlayerCollidingObstacles = obstacles.filter(obstacle => futurePushedPlayer.isCollidingWith(obstacle));
+                        if (pushedPlayerCollidingObstacles.length === 0) {
+                            collidingPlayer.x = pushedX;
+                            collidingPlayer.y = pushedY;
+                        }
                     }
+                });
+
+                if (collidingObstacles.length > 0) {
+                    collidingObstacles.forEach(collidingObstacle => {
+                        if (collidingObstacle.win) {
+                            nextLevel();
+                        }
+                        if (collidingObstacle.moving) {
+                            this.x += collidingObstacle.dx;
+                            this.y += collidingObstacle.dy;
+                            if (this.x < 0 || this.x + this.width > canvas.width ||
+                                this.y < 0 || this.y + this.height > canvas.height) {
+                                this.x = 0;
+                                this.y = 0;
+                            }
+                        }
+                    });
                 }
             }
         }
