@@ -12,11 +12,17 @@ export class Player extends GameObject {
         this.color = color;
         this.initialX = x;
         this.initialY = y;
+        this.score = 0;
+        this.visible = true;
     }
 
     resetPosition() {
         this.x = this.initialX;
         this.y = this.initialY;
+    }
+
+    hide() {
+        this.visible = false;
     }
 
     movePlayer(canvas, obstacles, players) {
@@ -57,6 +63,8 @@ export class Player extends GameObject {
     }
 
     updatePosition(canvas, obstacles, players) {
+        if (!this.visible) return;
+
         const newX = this.x + this.dx;
         const newY = this.y + this.dy;
         const futurePlayer = new GameObject(newX, newY, this.width, this.height);
@@ -87,7 +95,7 @@ export class Player extends GameObject {
                 if (collidingObstacles.length > 0) {
                     collidingObstacles.forEach(collidingObstacle => {
                         if (collidingObstacle.win) {
-                            nextLevel();
+                            nextLevel(this);
                         }
                         if (collidingObstacle.moving) {
                             this.x += collidingObstacle.dx;

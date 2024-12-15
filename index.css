@@ -1,3 +1,38 @@
+#menu, #leaderboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+#menu h2, #leaderboard h2 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+#menu button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#menu button:hover {
+    background-color: #0056b3;
+}
+
 canvas {
     border: 3px solid black;
     display: block;
@@ -8,12 +43,6 @@ h1 {
     display: flex;
     justify-content: center;
     text-align: center;
-}
-
-#menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .player-config {

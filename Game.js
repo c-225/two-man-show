@@ -1,7 +1,6 @@
 import Player from './Classes/Player.js';
 import Level from './Classes/Level.js';
-import Bonus from "./Classes/Bonus.js";
-import player from "./Classes/Player.js";
+import AllLevels from "./Levels/AllLevels.js";
 
 const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
@@ -12,12 +11,31 @@ const levelManager = new Level();
 let obstacles = levelManager.getCurrentLevel();
 
 let depart = document.getElementById("start")
-depart.addEventListener('click', () => {
-    let hide = document.getElementById("Intro")
-    hide.style.display='none'
-    let show = document.getElementById("gameCanvas")
-    show.style.display='block'
-})
+document.addEventListener('DOMContentLoaded', (event) => {
+    const startButton = document.getElementById('start');
+    startButton.addEventListener('click', () => {
+        document.getElementById('menu').style.display = 'none';
+        document.getElementById('gameCanvas').style.display = 'block';
+    });
+});
+
+function showCountdown(value, func) {
+    if (value === 0) {
+        func();
+        gameLoop();
+        return;
+    }
+    context.save();
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "black";
+    context.font = "50px Verdana";
+    context.fillText(value.toString(), canvas.width / 2, canvas.height / 2);
+
+    context.restore();
+
+    setTimeout(() => showCountdown(value - 1, func), 1000);
+}
 
 function setFinish(){
     obstacles[0].win = true; // toujours avoir le premier qui est le finish
@@ -38,6 +56,7 @@ function addPlayer() {
         newPlayer.movePlayer(canvas, obstacles, players);
         players.push(newPlayer);
         index++;
+        document.getElementById('playerCount').innerText = `Players: ${players.length}`;
     }
 }
 
@@ -47,6 +66,10 @@ function draw() {
     players.forEach(player => {
         context.fillStyle = player.color;
         context.fillRect(player.x, player.y, player.width, player.height);
+
+        context.fillStyle = "black";
+        context.font = "20px Arial";
+        context.fillText(`Score: ${player.score}`, player.x, player.y - 10);
     });
 
     setFinish();
@@ -69,23 +92,92 @@ function draw() {
 document.getElementById('addPlayerButton').addEventListener('click', addPlayer);
 
 function gameLoop() {
+    if (!gameRunning) return;
     obstacles.forEach(obstacle => obstacle.move(canvas));
     players.forEach(player => player.updatePosition(canvas, obstacles, players));
     draw();
     requestAnimationFrame(gameLoop);
 }
 
-export function nextLevel() {
+function startGame() {
+    showCountdown(4, () => {
+        console.log("starts!");
+    });
+}
+
+let finishOrder = [];
+let currentLevelIndex = 0;
+const totalLevels = Object.keys(AllLevels).length;
+let gameRunning = true;
+
+function showLeaderboard() {
+    gameRunning = false;
+    document.getElementById('gameCanvas').style.display = 'none';
+    const leaderboard = document.getElementById('leaderboard');
+    leaderboard.style.display = 'block';
+    leaderboard.innerHTML = '';
+
+    const title = document.createElement('h2');
+    title.textContent = 'Leaderboard';
+    leaderboard.appendChild(title);
+
+    players.sort((a, b) => b.score - a.score);
+
+    players.forEach((player, index) => {
+        const playerScore = document.createElement('p');
+        playerScore.textContent = `${index + 1}. ${player.color} - Score: ${player.score}`;
+        leaderboard.appendChild(playerScore);
+    });
+}
+
+function loadNextLevel() {
+    if (currentLevelIndex < totalLevels) {
+        const levelKey = `level${currentLevelIndex + 1}`;
+        const levelData = AllLevels[levelKey];
+        obstacles = levelData;
+        console.log(`Loading ${levelKey}`, levelData);
+        currentLevelIndex++;
+    } else {
+        console.log('All levels completed!');
+        showLeaderboard();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const startButton = document.getElementById('start');
+    startButton.addEventListener('click', () => {
+        document.getElementById('menu').style.display = 'none';
+        document.getElementById('gameCanvas').style.display = 'block';
+        document.getElementById('leaderboard').style.display = 'none'; // Hide the leaderboard initially
+    });
+});
+
+export function nextLevel(player) {
     console.log("Level Passed");
-    obstacles = levelManager.nextLevel();
-    if (obstacles) {
-        players.forEach(player => {
-            player.x = 0;
-            player.y = 0;
-        });
+    if (player) {
+        finishOrder.push(player);
+        player.hide();
+        if (finishOrder.length === 1) {
+            player.score += 3;
+        } else if (finishOrder.length === 2) {
+            player.score += 2;
+        } else if (finishOrder.length === 3) {
+            player.score += 1;
+        }
+    }
+    if (finishOrder.length === players.length) {
+        finishOrder = [];
+        loadNextLevel();
+        if (obstacles) {
+            players.forEach(player => {
+                player.x = 0;
+                player.y = 0;
+                player.visible = true;
+            });
+        }
     }
 }
 
 players.forEach(player => player.movePlayer(canvas, obstacles, players));
 
-gameLoop();
+startGame();

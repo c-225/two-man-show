@@ -5,22 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Two Man Show</title>
     <h1 id="title">Two Man Show</h1>
-    <link rel="stylesheet" href="index.css">
     <script type="module" src="Game.js"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div id="Intro" style="display:block">
-        <h1>Cliquez sur les touches suivantes pour entrer dans la partie</h1>
-        <h2>Joueur 1: "Z"</h2>
-        <h2>Joueur 2: "T"</h2>
-        <h2>Joueur 3: "O"</h2>
-        <h2>Joueur 4: "Flèche du haut"</h2>
-        <p id="listeP">
-            Joueurs prêts:<br>
-        </p>
+    <div id="menu">
+        <h2>1 Player mode : "Z Q S D"</h2>
+        <h2>2 Players mode : "Z Q S D" && "ArrowUp ArrowLeft ArrowDown ArrowRight"</h2>
+        <h2>3 Players mode : "Z Q S D" && "ArrowUp ArrowLeft ArrowDown ArrowRight" && "I J K L"</h2>
+        <h2>4 Players mode : "Z Q S D" && "ArrowUp ArrowLeft ArrowDown ArrowRight" && "I J K L" && "T F G H"</h2>
     <button id="addPlayerButton">Add Player</button>
+        <h2 id="playerCount">Players: 0</h2>
         <button id="start">Commencer</button>
     </div>
 <canvas id="gameCanvas" width="1000" height="500" style="display:none"></canvas>
+    <div id="leaderboard" ></div>
 </body>
 </html>
