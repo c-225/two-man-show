@@ -11,6 +11,14 @@ let players = [];
 const levelManager = new Level();
 let obstacles = levelManager.getCurrentLevel();
 
+let depart = document.getElementById("start")
+depart.addEventListener('click', () => {
+    let hide = document.getElementById("Intro")
+    hide.style.display='none'
+    let show = document.getElementById("gameCanvas")
+    show.style.display='block'
+})
+
 function setFinish(){
     obstacles[0].win = true; // toujours avoir le premier qui est le finish
 }
