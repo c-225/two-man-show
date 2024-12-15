@@ -56,6 +56,13 @@ export class Player extends GameObject {
         }
 
     }
+    sound = new Howl({
+        urls: ['https://mainline.i3s.unice.fr/mooc/SkywardBound/assets/sounds/plop.mp3'],
+    })
+
+    playSound() {
+        sound.play();
+    }
 
     updatePosition(canvas, obstacles, players) {
         const newX = this.x + this.dx;
@@ -88,6 +95,7 @@ export class Player extends GameObject {
                 if (collidingObstacles.length > 0) {
                     collidingObstacles.forEach(collidingObstacle => {
                         if (collidingObstacle.win) {
+                            
                             nextLevel();
                         }
                         if (collidingObstacle.moving) {
