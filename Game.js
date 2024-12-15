@@ -1,7 +1,7 @@
 import Player from './Classes/Player.js';
-import Obstacle from './Classes/Obstacle.js';
-import GameObject from "./Classes/GameObject.js";
 import Level from './Classes/Level.js';
+import Bonus from "./Classes/Bonus.js";
+import player from "./Classes/Player.js";
 
 const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
