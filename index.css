@@ -1,0 +1,21 @@
+canvas {
+    border: 3px solid black;
+    display: block;
+    margin: 0 auto;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player-config {
+    margin-bottom: 10px;
+}

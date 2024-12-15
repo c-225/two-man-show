@@ -11,12 +11,12 @@ export class Player extends GameObject {
         this.color = color;
     }
 
-    movePlayer(canvas, obstacles) {
+    movePlayer(canvas, obstacles, players) {
         document.addEventListener('keydown', (e) => {
             if (this.keys[e.key] !== undefined) {
                 this.keys[e.key] = true;
                 this.updateDirection();
-                this.updatePosition(canvas, obstacles);
+                this.updatePosition(canvas, obstacles, players);
             }
         });
 
@@ -24,7 +24,7 @@ export class Player extends GameObject {
             if (this.keys[e.key] !== undefined) {
                 this.keys[e.key] = false;
                 this.updateDirection();
-                this.updatePosition(canvas, obstacles);
+                this.updatePosition(canvas, obstacles, players);
             }
         });
     }
@@ -48,7 +48,7 @@ export class Player extends GameObject {
 
     }
 
-    updatePosition(canvas, obstacles) {
+    updatePosition(canvas, obstacles, players) {
         const newX = this.x + this.dx;
         const newY = this.y + this.dy;
         const futurePlayer = new GameObject(newX, newY, this.width, this.height);
@@ -56,19 +56,30 @@ export class Player extends GameObject {
         if (newX >= 0 && newX + this.width <= canvas.width &&
             newY >= 0 && newY + this.height <= canvas.height) {
             const collidingObstacle = obstacles.find(obstacle => futurePlayer.isCollidingWith(obstacle));
-            if (collidingObstacle) {
-                if (collidingObstacle.moving) {
+            const collidingPlayer = players.find(player => player !== this && futurePlayer.isCollidingWith(player));
+            if (!collidingObstacle && !collidingPlayer) {
+                this.x = newX;
+                this.y = newY;
+            } else if (collidingPlayer) {
+                const pushedX = collidingPlayer.x + this.dx;
+                const pushedY = collidingPlayer.y + this.dy;
+                if (pushedX >= 0 && pushedX + collidingPlayer.width <= canvas.width &&
+                    pushedY >= 0 && pushedY + collidingPlayer.height <= canvas.height) {
+                    collidingPlayer.x = pushedX;
+                    collidingPlayer.y = pushedY;
+                    this.x = newX;
+                    this.y = newY;
+                }
+            } else {
+                if (collidingObstacle && collidingObstacle.moving) {
                     this.x += collidingObstacle.dx;
                     this.y += collidingObstacle.dy;
                     if (this.x < 0 || this.x + this.width > canvas.width ||
                         this.y < 0 || this.y + this.height > canvas.height) {
-                            this.x = 0;
-                            this.y = 0;
+                        this.x = 0;
+                        this.y = 0;
                     }
                 }
-            } else {
-                this.x = newX;
-                this.y = newY;
             }
         }
     }
