@@ -1,6 +1,7 @@
 import Player from './Classes/Player.js';
 import Level from './Classes/Level.js';
 import AllLevels from "./Levels/AllLevels.js";
+import Obstacle from "./Classes/Obstacle.js";
 
 const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
@@ -107,7 +108,7 @@ function startGame() {
 
 let finishOrder = [];
 let currentLevelIndex = 0;
-const totalLevels = Object.keys(AllLevels).length;
+const totalLevels = 20;
 let gameRunning = true;
 
 function showLeaderboard() {
