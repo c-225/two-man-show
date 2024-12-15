@@ -32,11 +32,11 @@ function draw() {
 
 function gameLoop() {
     obstacles.forEach(obstacle => obstacle.move(canvas));
-    players.forEach(player => player.updatePosition(canvas, obstacles));
+    players.forEach(player => player.updatePosition(canvas, obstacles, players));
     draw();
     requestAnimationFrame(gameLoop);
 }
 
-players.forEach(player => player.movePlayer(canvas, obstacles));
+players.forEach(player => player.movePlayer(canvas, obstacles, players));
 
 gameLoop();
