@@ -1,13 +1,13 @@
 import GameObject from './GameObject.js';
-import {nextLevel} from "../Game.js";
 
 export class Obstacle extends GameObject {
-    constructor(x, y, width, height, dx , dy, moving = false) {
+    constructor(x, y, width, height, dx , dy, moving = false, resetting = false) {
         super(x, y, width, height);
         this.dx = dx;
         this.dy = dy;
         this.moving = moving;
         this.win = false;
+        this.resetting = resetting;
     }
 
 

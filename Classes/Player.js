@@ -1,5 +1,4 @@
 import GameObject from './GameObject.js';
-import gameObject from "./GameObject.js";
 import {nextLevel} from "../Game.js";
 
 export class Player extends GameObject {
@@ -11,6 +10,13 @@ export class Player extends GameObject {
         this.dy = 0;
         this.keys = keys;
         this.color = color;
+        this.initialX = x;
+        this.initialY = y;
+    }
+
+    resetPosition() {
+        this.x = this.initialX;
+        this.y = this.initialY;
     }
 
     movePlayer(canvas, obstacles, players) {
@@ -88,9 +94,11 @@ export class Player extends GameObject {
                             this.y += collidingObstacle.dy;
                             if (this.x < 0 || this.x + this.width > canvas.width ||
                                 this.y < 0 || this.y + this.height > canvas.height) {
-                                this.x = 0;
-                                this.y = 0;
+                                this.resetPosition();
                             }
+                        }
+                        if (collidingObstacle.resetting) {
+                            this.resetPosition();
                         }
                     });
                 }
