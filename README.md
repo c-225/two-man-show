@@ -1,5 +1,12 @@
 # TWO-MAN-SHOW
 
+# Lancement
+Par manque de capacité d'hébergement, il faudra lancer la commande suivante dans votre terminal:
+  github.com/c-225/two-man-show/
+  
+Puis aller sur le lien suivant:
+  localhost:8000
+
 # Conception
 
 Création de différentes classes pour de l'orienté objet.
