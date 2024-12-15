@@ -5,10 +5,10 @@ const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
 
 const players = [
-    new Player(50, 50, 30, 5, 'green', { 'z': false, 's': false, 'q': false, 'd': false }),
-    new Player(0, 0, 30, 5, 'blue', { 'ArrowUp': false, 'ArrowDown': false, 'ArrowLeft': false, 'ArrowRight': false }),
-    new Player(100, 100, 30, 5, 'orange', { 'i': false, 'k': false, 'j': false, 'l': false }),
-    new Player(150, 150, 30, 5, 'purple', { 't': false, 'g': false, 'f': false, 'h': false }),
+    new Player(50, 50, 30, 5, 'green', ['KeyW','KeyS','KeyA','KeyD', { KeyW: false, KeyS: false, KeyA: false, KeyD: false }]),
+    new Player(0, 0, 30, 5, 'blue',[ 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',{ 'ArrowUp': false, 'ArrowDown': false, 'ArrowLeft': false, 'ArrowRight': false }]),
+    new Player(100, 100, 30, 5, 'orange', [ 'KeyT','KeyG','KeyF','KeyH',{ KeyT: false, KeyG: false, KeyF: false, KeyH: false }]),
+    new Player(150, 150, 30, 5, 'purple', [ 'KeyO','KeyL','KeyK','Semicolon',{ KeyO: false, KeyL: false, KeyK: false, Semicolon: false }]),
 ];
 
 const obstacles = [

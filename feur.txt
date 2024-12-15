@@ -2,29 +2,23 @@ import GameObject from './GameObject.js';
 
 export class Player extends GameObject {
 
-    constructor (x, y, size, speed, color, keys) {
+    constructor (x, y, size, speed, color, controls) {
         super(x, y, size, size);
         this.speed = speed;
         this.dx = 0;
         this.dy = 0;
-        this.keys = keys;
         this.color = color;
+        this.keys = controls;
+        this.score = 0;
     }
-
+    
     movePlayer(canvas, obstacles) {
         document.addEventListener('keydown', (e) => {
-            if (this.keys[4][e.code] !== undefined) {
-                this.keys[4][e.code] = true;
-                this.updateDirection();
+            if (this.keys[4][e.key] !== undefined) {
+                this.keys[4][e.key] = true;
+                this.updateDirection(this.keys);
                 this.updatePosition(canvas, obstacles);
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if (this.keys[4][e.code] !== undefined) {
-                this.keys[4][e.code] = false;
-                this.updateDirection();
-                this.updatePosition(canvas, obstacles);
+                this.keys[4][e.key] = false;
             }
         });
     }
@@ -32,20 +26,18 @@ export class Player extends GameObject {
     updateDirection() {
         this.dx = 0;
         this.dy = 0;
-
-        if (this.keys[4][[this.keys[0]]]) {
+        if (this.keys[4][this.keys[0]]) { // touche du haut
             this.dy = -this.speed;
         }
-        if (this.keys[4][[this.keys[1]]]) {
+        if (this.keys[4][this.keys[1]]) { // touche du bas
             this.dy = this.speed;
         }
-        if (this.keys[4][[this.keys[2]]]) {
+        if (this.keys[4][this.keys[2]]) { // touche de gauche
             this.dx = -this.speed;
         }
-        if (this.keys[4][[this.keys[3]]]) {
+        if (this.keys[4][this.keys[3]]) { // touche de droite
             this.dx = this.speed;
         }
-
     }
 
     updatePosition(canvas, obstacles) {
@@ -67,6 +59,7 @@ export class Player extends GameObject {
                     }
                 }
             } else {
+                console.log(this.dx, this.dy)
                 this.x = newX;
                 this.y = newY;
             }
