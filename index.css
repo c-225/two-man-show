@@ -16,6 +16,15 @@ h1 {
     align-items: center;
 }
 
+div {
+    display: flex;
+    justify-content: center;
+    text-align: center;}
+button {
+    vertical-align: middle;
+    padding: 10px 20px;
+}
+
 .player-config {
     margin-bottom: 10px;
 }

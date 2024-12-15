@@ -9,11 +9,11 @@ let index = 0;
 let players = [];
 
 let depart = document.getElementById("start")
+
 depart.addEventListener('click', () => {
-    let hide = document.getElementById("Intro")
-    hide.style.display='none'
-    let show = document.getElementById("gameCanvas")
-    show.style.display='block'
+    document.getElementById("Intro").style.display='none'
+    document.getElementById("gameCanvas").style.display='block'
+    document.getElementById("scoring").style.display='block'
 })
 
 let obstacles = [
@@ -27,16 +27,22 @@ function setFinish(){
 }
 
 function addPlayer() {
+    document.getElementById("start").style.display='block'
     let newPlayer;
+    let play = document.getElementById("listeP")
     if (index === 0) {
-        newPlayer = new Player(0, 50, 30, 5, 'green', { 'z': false, 's': false, 'q': false, 'd': false });
+        newPlayer = new Player(0, 50, 30, 5, 'green', { 'z': false, 's': false, 'q': false, 'd': false }, 0);
     } else if (index === 1) {
-        newPlayer = new Player(0, 0, 30, 5, 'blue', { 'ArrowUp': false, 'ArrowDown': false, 'ArrowLeft': false, 'ArrowRight': false });
+        newPlayer = new Player(0, 0, 30, 5, 'blue', { 'ArrowUp': false, 'ArrowDown': false, 'ArrowLeft': false, 'ArrowRight': false }, 0);
     } else if (index === 2) {
-        newPlayer = new Player(50, 0, 30, 5, 'orange', { 'i': false, 'k': false, 'j': false, 'l': false });
+        newPlayer = new Player(50, 0, 30, 5, 'orange', { 'i': false, 'k': false, 'j': false, 'l': false }, 0);
     } else if (index === 3) {
-        newPlayer = new Player(50, 50, 30, 5, 'purple', { 't': false, 'g': false, 'f': false, 'h': false });
+        newPlayer = new Player(50, 50, 30, 5, 'purple', { 't': false, 'g': false, 'f': false, 'h': false }, 0);
+        document.getElementById('addPlayerButton').innerText = "liste pleine"
     }
+    else return
+    play.innerHTML += "Joueur "+ (index+1)+" = "+newPlayer.color +" <br/>"
+    
     if (newPlayer) {
         newPlayer.movePlayer(canvas, obstacles, players);
         players.push(newPlayer);
@@ -77,7 +83,6 @@ function gameLoop() {
     draw();
     requestAnimationFrame(gameLoop);
 }
-
 export function nextLevel() {
     console.log("Level Passed");
 }

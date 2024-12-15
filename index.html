@@ -9,18 +9,16 @@
     <script type="module" src="Game.js"></script>
 </head>
 <body>
-    <div id="Intro" style="display:block">
-        <h1>Cliquez sur les touches suivantes pour entrer dans la partie</h1>
-        <h2>Joueur 1: "Z"</h2>
-        <h2>Joueur 2: "T"</h2>
-        <h2>Joueur 3: "O"</h2>
-        <h2>Joueur 4: "Flèche du haut"</h2>
+    <div id="Intro" style="display:block;">
+        <h1>Cliquez sur le bouton pour ajouter un joueur</h1>
+        <button id="addPlayerButton">Ajouter un joueur</button>
+        <button id="start" style="display: none;" style="vertical-align: middle;">Commencer</button>
         <p id="listeP">
             Joueurs prêts:<br>
         </p>
-    <button id="addPlayerButton">Add Player</button>
-        <button id="start">Commencer</button>
     </div>
-<canvas id="gameCanvas" width="1000" height="500" style="display:none"></canvas>
+<canvas id="gameCanvas" width="1000" height="500" style="display:none;"></canvas>
+<div id = "scoring" style="display:none;">
+</div>
 </body>
 </html>

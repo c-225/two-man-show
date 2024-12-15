@@ -11,6 +11,7 @@ export class Player extends GameObject {
         this.dy = 0;
         this.keys = keys;
         this.color = color;
+        this.score=0;
     }
 
     movePlayer(canvas, obstacles, players) {
