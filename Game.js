@@ -1,12 +1,15 @@
 import Player from './Classes/Player.js';
 import Obstacle from './Classes/Obstacle.js';
 import GameObject from "./Classes/GameObject.js";
+import Level from './Classes/Level.js';
 
 const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
 let index = 0;
 
 let players = [];
+const levelManager = new Level();
+let obstacles = levelManager.getCurrentLevel();
 
 let depart = document.getElementById("start")
 
@@ -15,12 +18,6 @@ depart.addEventListener('click', () => {
     document.getElementById("gameCanvas").style.display='block'
     document.getElementById("scoring").style.display='block'
 })
-
-let obstacles = [
-    new Obstacle(850, 250, 50, 50, 0, 0, false),
-    new Obstacle(300, 100, 100, 50, 0, 2, true),
-    new Obstacle(100, 100, 50, 50, 0, 2, false),
-];
 
 function setFinish(){
     obstacles[0].win = true; // toujours avoir le premier qui est le finish
@@ -85,6 +82,13 @@ function gameLoop() {
 }
 export function nextLevel() {
     console.log("Level Passed");
+    obstacles = levelManager.nextLevel();
+    if (obstacles) {
+        players.forEach(player => {
+            player.x = 0;
+            player.y = 0;
+        });
+    }
 }
 
 players.forEach(player => player.movePlayer(canvas, obstacles, players));
