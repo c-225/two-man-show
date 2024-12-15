@@ -6,10 +6,10 @@ const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
 
 let players = [
-    new Player(0, 50, 30, 5, 'green', { 'z': false, 's': false, 'q': false, 'd': false }),
+    /*new Player(0, 50, 30, 5, 'green', { 'z': false, 's': false, 'q': false, 'd': false }),
     new Player(0, 0, 30, 5, 'blue', { 'ArrowUp': false, 'ArrowDown': false, 'ArrowLeft': false, 'ArrowRight': false }),
     new Player(50, 0, 30, 5, 'orange', { 'i': false, 'k': false, 'j': false, 'l': false }),
-    new Player(50, 50, 30, 5, 'purple', { 't': false, 'g': false, 'f': false, 'h': false }),
+    new Player(50, 50, 30, 5, 'purple', { 't': false, 'g': false, 'f': false, 'h': false }),*/
 ];
 
 let obstacles = [
@@ -22,8 +22,14 @@ function setFinish(){
     obstacles[0].win = true; // toujours avoir le premier qui est le finish
 }
 
+function addPlayers(color, up, down, left, right) {
+    players.push(new Player(0, 0, 30, 5, color, { up: false, down: false, left: false, right: false }));
+}
+
 function draw() {
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    addPlayers('green', 'z', 's', 'q', 'd');
 
     players.forEach(player => {
         context.fillStyle = player.color;
