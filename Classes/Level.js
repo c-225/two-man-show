@@ -36,10 +36,12 @@ export class Level {
     }
 
     nextLevel() {
+        this.sound.play()
         this.levelIndex++;
         if (this.levelIndex < this.levels.length) {
             return this.getCurrentLevel();
         } else {
+            document.getElementById("leaderboard").style.display="block"
             console.log("All levels completed!");
             return null;
         }

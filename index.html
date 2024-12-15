@@ -7,18 +7,21 @@
     <h1 id="title">Two Man Show</h1>
     <link rel="stylesheet" href="index.css">
     <script type="module" src="Game.js"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div id="Intro" style="display:block;">
-        <h1>Cliquez sur le bouton pour ajouter un joueur</h1>
-        <button id="addPlayerButton">Ajouter un joueur</button>
-        <button id="start" style="display: none;" style="vertical-align: middle;">Commencer</button>
-        <p id="listeP">
-            Joueurs prêts:<br>
-        </p>
+    <div id="menu">
+        <h2>Player 1 : "Z Q S D"</h2>
+        <h2>Player 2 : "ArrowUp ArrowLeft ArrowDown ArrowRight"</h2>
+        <h2>Player 3 : "I J K L"</h2>
+        <h2>Player 4 : "T F G H"</h2>
+    <button id="addPlayerButton">Add Player</button>
+        <h2 id="playerCount">Players: 0</h2>
+        <button id="start" style="display: none;">Commencer</button>
+        <audio src = "assets/hoha.mp3" id="musica"></audio>
     </div>
-<canvas id="gameCanvas" width="1000" height="500" style="display:none;"></canvas>
-<div id = "scoring" style="display:none;">
-</div>
+<canvas id="gameCanvas" width="1000" height="500" style="display:none"></canvas>
+    <div id="leaderboard" style="display: none;"></div>
+    <button id="stop"  style="display:'none'">play</button>
 </body>
 </html>
