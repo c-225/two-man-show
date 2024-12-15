@@ -6,9 +6,20 @@
     <title>Two Man Show</title>
     <h1 id="title">Two Man Show</h1>
     <link rel="stylesheet" href="index.css">
+    <script type="module" src="Game.js"></script>
 </head>
 <body>
-<canvas id="gameCanvas" width="1000" height="500"></canvas>
-<script type="module" src="Game.js"></script>
+    <div id="Intro" style="display:block">
+        <h1>Cliquez sur les touches suivantes pour entrer dans la partie</h1>
+        <h2>Joueur 1: "Z"</h2>
+        <h2>Joueur 2: "T"</h2>
+        <h2>Joueur 3: "O"</h2>
+        <h2>Joueur 4: "Flèche du haut"</h2>
+        <p id="listeP">
+            Joueurs prêts:<br>
+        </p>
+        <button id="start">Commencer</button>
+    </div>
+<canvas id="gameCanvas" width="1000" height="500" style="display:none"></canvas>
 </body>
 </html>
