@@ -5,7 +5,7 @@ Par manque de capacité d'hébergement, il faudra lancer la commande suivante da
   github.com/c-225/two-man-show/
   
 Puis aller sur le lien suivant:
-  localhost:8000
+  localhost:8000/
 
 # Conception
 
